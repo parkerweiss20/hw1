@@ -12,12 +12,53 @@ the function below should be the only one in this file.
 
 #include "split.h"
 
-/* Add a prototype for a helper function here if you need */
+void append(Node*& list, Node*& current);
 
 void split(Node*& in, Node*& odds, Node*& evens)
 {
-  /* Add code here */
-// WRITE YOUR CODE HERE
+  if(in == nullptr){
+    return;
+  }
+  else{
+
+    Node* current = in;
+    in = current->next;
+    current->next = nullptr;
+
+    if(current->value % 2 == 1)
+    {
+      if(odds == nullptr)
+        {
+            odds = current;
+        } 
+        else
+        {
+            append(odds, current);
+        }
+    }
+    else
+    {
+        if(evens == nullptr)
+        {
+            evens = current;
+        }
+        else
+        {
+            append(evens, current);
+        }
+    }
+    split(in, odds, evens);
+  }
 }
 
-/* If you needed a helper function, write it here */
+void append(Node*& list, Node*& current)
+{
+    if(list->next == nullptr)
+    {
+        list->next = current;
+    }
+    else
+    {
+        append(list->next, current);
+    }
+}
